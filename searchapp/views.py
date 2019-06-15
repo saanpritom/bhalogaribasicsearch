@@ -17,50 +17,16 @@ class AllCarsAPIView(generics.ListAPIView):
 
 class CreateCarAPIView(generics.CreateAPIView):
     serializer_class = CarSerializer
-    model_class = CarModel
-    faker_script_class = FakerCarData()
-
-    def post(self, request):
-
-        headline = self.faker_script_class.fake_headline()
-        manufacturer = self.faker_script_class.fake_manufacturer()
-        car_model = self.faker_script_class.fake_car_model()
-        car_type = self.faker_script_class.fake_car_type()
-        engine_type = self.faker_script_class.fake_engine_type()
-        chasis_number = self.faker_script_class.fake_chasis_number()
-        description = self.faker_script_class.fake_description()
-        price = self.faker_script_class.fake_price()
-
-        new_car_instance = self.model_class.objects.create_faker_data(headline = headline,
-                                           manufacturer = manufacturer,
-                                           car_model = car_model,
-                                           car_type = car_type,
-                                           engine_type = engine_type,
-                                           chasis_number = chasis_number,
-                                           description = description,
-                                           tags = self.faker_script_class.fake_tags(headline = headline,
-                                                                                    manufacturer = manufacturer,
-                                                                                    car_model = car_model,
-                                                                                    car_type = car_type,
-                                                                                    engine_type = engine_type),
-                                           price = price,
-                                           is_active = True)
-
-        if int(new_car_instance):
-            #return True
-            return Response(self.serializer_class.data, status=status.HTTP_201_CREATED)
-        else:
-            #return False
-            return Response(self.serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CreateFakeCarData(View):
     model = CarModel
     serializer_class = CarSerializer
     form_class = CarCreationFrom
+    faker_script_class = FakerCarData()
     template_name = 'car-add-view.html'
     initial = {'key': 'value'}
-    api_view = CreateCarAPIView()
+    api_endpoint = str(base_url) + '/api/v1/cars/create/'
     request_method = 'get'
 
     def get(self, request, *args, **kwargs):
@@ -78,7 +44,24 @@ class CreateFakeCarData(View):
 
             for _ in range(int(total_numbers)):
 
-                hit_api = self.api_view.post()
+                #calling faker agent to create fake dataset
+                headline = self.faker_script_class.fake_headline()
+                manufacturer = self.faker_script_class.fake_manufacturer()
+                car_model = self.faker_script_class.fake_car_model()
+                car_type = self.faker_script_class.fake_car_type()
+                engine_type = self.faker_script_class.fake_engine_type()
+                chasis_number = self.faker_script_class.fake_chasis_number()
+                description = self.faker_script_class.fake_description()
+                tags = self.faker_script_class.fake_tags(headline = headline,
+                                                         manufacturer = manufacturer,
+                                                         car_model = car_model,
+                                                         car_type = car_type,
+                                                         engine_type = engine_type)
+                price = self.faker_script_class.fake_price()
+                is_active = config_is_active
+
+                #hitting the CreateAPI Endpoint
+                hit_api = 'self.api_endpoint headline="headline"'
 
                 if hit_api.status == status.HTTP_201_CREATED:
                     counter_flag = counter_flag + 1
