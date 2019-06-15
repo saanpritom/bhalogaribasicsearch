@@ -8,6 +8,21 @@ class CarModelManager(models.Manager):
     def check_chasis_number(self, chasis_number):
         return chasis_number
 
+    def create_faker_data(self, **model_data):
+        car_object = self.model.objects.create(headline = model_data['headline'],
+                                               manufacturer = model_data['manufacturer'],
+                                               car_model = model_data['car_model'],
+                                               car_type = model_data['car_type'],
+                                               engine_type = model_data['engine_type'],
+                                               chasis_number = model_data['chasis_number'],
+                                               description = model_data['description'],
+                                               tags = model_data['tags'],
+                                               price = model_data['price'],
+                                               is_active = model_data['is_active'])
+
+        car_object.save()
+        return car_object.id
+
 
 class CarModel(models.Model):
     headline = models.CharField(max_length=60, null=False, unique=False)

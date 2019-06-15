@@ -1,0 +1,55 @@
+{% extends "base-view.html" %}
+
+{% load staticfiles %}
+
+{% block body_block %}
+
+    <h1>Create Cars with the power of Python Faker Library</h1>
+
+    <form class="" method="post">
+
+      {% csrf_token %}
+
+      <div class="form-group">
+
+        <label for="InputCarNumbers">{{ form.total_numbers.label }}</label>
+
+        {{ form.total_numbers }}
+
+        <p class="form-helptext">{{ form.total_numbers.help_text }}</p>
+
+        {% if form.total_numbers.errors %}
+
+          <div class="alert alert-danger" role="alert">
+
+             <strong>Sorry!</strong> {{ form.total_numbers.errors }}
+
+          </div>
+
+        {% endif %}
+
+        <input type="submit" name="submit" value="Create Cars" class="btn btn-primary">
+
+      </div>
+
+
+    </form>
+
+    {% if request_method == 'errorpost' %}
+
+    <div class="alert alert-danger" role="alert">
+      <strong>Sorry!</strong> Something Wrong Happened. Please Try again.
+    </div>
+
+    {% endif %}
+
+    {% if request_method == 'successpost' %}
+
+    <div class="alert alert-sucess" role="alert">
+      <strong>Hurrah!</strong> Data are posted successfully.
+    </div>
+
+    {% endif %}
+
+
+{% endblock %}
