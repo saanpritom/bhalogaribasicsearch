@@ -6,9 +6,14 @@ from django.db.models import Q
 class CarModelManager(models.Manager):
 
     def check_chasis_number(self, chasis_number):
-        return chasis_number
+        existed_car_id = self.model.objects.filter(chasis_number = chasis_number).count()
 
-    def create_faker_data(self, **model_data):
+        if existed_car_id > 0:
+            return True
+        else:
+            return False
+
+    def create_fake_data(self, **model_data):
         car_object = self.model.objects.create(headline = model_data['headline'],
                                                manufacturer = model_data['manufacturer'],
                                                car_model = model_data['car_model'],
@@ -17,8 +22,7 @@ class CarModelManager(models.Manager):
                                                chasis_number = model_data['chasis_number'],
                                                description = model_data['description'],
                                                tags = model_data['tags'],
-                                               price = model_data['price'],
-                                               is_active = model_data['is_active'])
+                                               price = model_data['price'])
 
         car_object.save()
         return car_object.id

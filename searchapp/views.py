@@ -21,12 +21,10 @@ class CreateCarAPIView(generics.CreateAPIView):
 
 class CreateFakeCarData(View):
     model = CarModel
-    serializer_class = CarSerializer
     form_class = CarCreationFrom
     faker_script_class = FakerCarData()
     template_name = 'car-add-view.html'
     initial = {'key': 'value'}
-    api_endpoint = str(base_url) + '/api/v1/cars/create/'
     request_method = 'get'
 
     def get(self, request, *args, **kwargs):
@@ -40,7 +38,7 @@ class CreateFakeCarData(View):
             total_numbers = form.cleaned_data['total_numbers']
             form = self.form_class(initial=self.initial)
 
-            counter_flag = 1
+            counter_flag = 0
 
             for _ in range(int(total_numbers)):
 
@@ -58,16 +56,30 @@ class CreateFakeCarData(View):
                                                          car_type = car_type,
                                                          engine_type = engine_type)
                 price = self.faker_script_class.fake_price()
-                is_active = config_is_active
+                is_active = True
 
-                #hitting the CreateAPI Endpoint
-                hit_api = 'self.api_endpoint headline="headline"'
+                #check if the chasis number is already exists or not
+                if self.model.objects.check_chasis_number(chasis_number):
+                    chasis_number = chasis_number
+                else:
+                    chasis_number = str(chasis_number) + str(price)
 
-                if hit_api.status == status.HTTP_201_CREATED:
+                #call the save function and save the data
+                new_car_data = self.model.objects.create_fake_data(headline = headline,
+                                                                    manufacturer = manufacturer,
+                                                                    car_model = car_model,
+                                                                    car_type = car_type,
+                                                                    engine_type = engine_type,
+                                                                    chasis_number = chasis_number,
+                                                                    description = description,
+                                                                    tags = tags,
+                                                                    price = price)
+
+                if int(new_car_data):
                     counter_flag = counter_flag + 1
-                    continue
                 else:
                     break
+
 
             if counter_flag == int(total_numbers):
                 self.request_method = 'successpost'
