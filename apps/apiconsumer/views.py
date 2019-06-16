@@ -3,7 +3,7 @@ from django.views.generic import View
 from apps.searchapp.configs import *
 from apps.searchapp.models import CarModel
 from apps.apiconsumer.fakerscripts import FakerCarData
-from apps.apiconsumer.forms import CarCreationFrom
+from apps.apiconsumer.forms import CarCreationFrom, CarSearchForm
 from apps.apiconsumer.apis import *
 import json, requests
 
@@ -110,3 +110,19 @@ class DetailCarView(View):
         api_response = self.request_api(car_id)
         jsonify_data = json.loads(api_response.content)
         return render(request, self.template_name, {'api_response': api_response, 'datas': jsonify_data})
+
+
+class SearchCarView(View):
+    api_endpoint = api_endpoints['car_search']
+    template_name = 'search-view.html'
+
+    def request_api(self, search_keyword):
+        search_keyword_api_endpoint = str(self.api_endpoint) + str(search_keyword) + '/'
+        response = requests.get(search_keyword_api_endpoint)
+        return response
+
+    def get(self, request, *args, **kwargs):
+        search_keyword = 'all'
+        api_response = self.request_api(search_keyword)
+        jsonify_data = json.loads(api_response.content)
+        return render(request, self.template_name, {'api_response': api_response, 'datas': jsonify_data, 'search_keyword': search_keyword})

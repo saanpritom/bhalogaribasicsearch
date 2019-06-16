@@ -6,3 +6,10 @@ class CarCreationFrom(forms.Form):
 
     class Meta:
         fields = ('total_numbers',)
+
+
+class CarSearchForm(forms.Form):
+    search = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control mr-sm-2', 'id': 'InputSearch', 'placeholder': 'Search'}), required=True, max_length=60)
+
+    class Meta:
+        fields = ('search',)
