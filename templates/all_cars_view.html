@@ -21,11 +21,11 @@
 
         <tbody>
 
-          {% for car in cars %}
+          {% for car in datas %}
 
             <tr>
               <td>{{ forloop.counter }}</td>
-              <td><a href="#">{{ car.headline }}</a></td>
+              <td><a href="{% url 'detail-car' pk=car.id %}">{{ car.headline }}</a></td>
               <td>{{ car.manufacturer }}</td>
               <td>{{ car.car_model }}</td>
               <td>{{ car.car_type }}</td>

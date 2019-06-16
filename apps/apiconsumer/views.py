@@ -95,4 +95,20 @@ class AllCarsView(View):
     def get(self, request, *args, **kwargs):
         api_response = self.request_api()
         jsonify_data = json.loads(api_response.content)
-        return render(request, self.template_name, {'api_response': api_response, 'cars': jsonify_data})
+        return render(request, self.template_name, {'api_response': api_response, 'datas': jsonify_data})
+
+
+class DetailCarView(View):
+    api_endpoint = api_endpoints['single_car']
+    template_name = 'car_detail_view.html'
+
+    def request_api(self, car_id):
+        car_id_api_endpoint = str(self.api_endpoint) + str(car_id) + '/'
+        response = requests.get(car_id_api_endpoint)
+        return response
+
+    def get(self, request, *args, **kwargs):
+        car_id = kwargs['pk']
+        api_response = self.request_api(car_id)
+        jsonify_data = json.loads(api_response.content)
+        return render(request, self.template_name, {'api_response': api_response, 'datas': jsonify_data})
