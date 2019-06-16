@@ -6,6 +6,8 @@ from apps.searchapp.serializers import CarSerializer
 from apps.searchapp.models import CarModel, CarModelManager
 from apps.searchapp.forms import CarCreationFrom
 from apps.searchapp.fakerscripts import FakerCarData
+from apps.apiconsumer.apis import *
+import json, requests
 
 # Create your views here.
 class CreateFakeCarData(View):
@@ -80,3 +82,17 @@ class CreateFakeCarData(View):
             self.request_method = 'errorpost'
             form = self.form_class(initial=self.initial)
             return render(request, self.template_name, {'form': form, 'request_method': self.request_method})
+
+
+class AllCarsView(View):
+    api_endpoint = api_endpoints['all_cars']
+    template_name = 'all_cars_view.html'
+
+    def request_api(self):
+        response = requests.get(self.api_endpoint)
+        return response
+
+    def get(self, request, *args, **kwargs):
+        api_response = self.request_api()
+        jsonify_data = json.loads(api_response.content)
+        return render(request, self.template_name, {'api_response': api_response, 'cars': jsonify_data})
