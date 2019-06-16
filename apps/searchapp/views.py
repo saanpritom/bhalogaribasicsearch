@@ -8,8 +8,6 @@ from rest_framework.response import Response
 from apps.searchapp.configs import *
 from apps.searchapp.serializers import CarSerializer
 from apps.searchapp.models import CarModel, CarModelManager
-from apps.searchapp.forms import CarCreationFrom
-from apps.searchapp.fakerscripts import FakerCarData
 from apps.searchapp.dictionary import *
 
 # Create your views here.

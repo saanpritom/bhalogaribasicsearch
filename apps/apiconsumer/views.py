@@ -1,11 +1,9 @@
 from django.shortcuts import render, Http404
 from django.views.generic import View
-from django.views.generic.base import TemplateView
 from apps.searchapp.configs import *
-from apps.searchapp.serializers import CarSerializer
-from apps.searchapp.models import CarModel, CarModelManager
-from apps.searchapp.forms import CarCreationFrom
-from apps.searchapp.fakerscripts import FakerCarData
+from apps.searchapp.models import CarModel
+from apps.apiconsumer.fakerscripts import FakerCarData
+from apps.apiconsumer.forms import CarCreationFrom
 from apps.apiconsumer.apis import *
 import json, requests
 
