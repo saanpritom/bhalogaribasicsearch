@@ -40,7 +40,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/pritom/python-projects/bhalogarisearch/.env"
+VIRTUAL_ENV="/home/pritom/python-projects/bhalogaribasicsearch/.env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

@@ -1,4 +1,4 @@
-#!/home/pritom/python-projects/bhalogarisearch/.env/bin/python3
+#!/home/pritom/python-projects/bhalogaribasicsearch/.env/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

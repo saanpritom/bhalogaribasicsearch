@@ -1,4 +1,4 @@
-#!/home/pritom/python-projects/bhalogarisearch/.env/bin/python
+#!/home/pritom/python-projects/bhalogaribasicsearch/.env/bin/python
 
 import sys
 import getopt
