@@ -126,3 +126,16 @@ class SearchCarView(View):
         api_response = self.request_api(search_keyword)
         jsonify_data = json.loads(api_response.content)
         return render(request, self.template_name, {'api_response': api_response, 'datas': jsonify_data, 'search_keyword': search_keyword})
+
+    def post(self, request, *args, **kwargs):
+        search_keyword = request.POST['keyword']
+        #data cleaning
+        search_keyword = search_keyword.strip()
+        api_response = self.request_api(search_keyword)
+
+        if api_response.status_code == 200:
+            jsonify_data = json.loads(api_response.content)
+        else:
+            jsonify_data = 'No Data'
+
+        return render(request, self.template_name, {'api_response': api_response, 'datas': jsonify_data, 'search_keyword': search_keyword})

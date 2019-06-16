@@ -7,6 +7,8 @@
     <h1>List of searched cars</h1>
     <p>Your searched keyword is  <b>{{ search_keyword }}</b> </p>
 
+    {% if api_response.status_code == 200 and datas %}
+
     <div class="table">
 
       <table class="table table-responsive">
@@ -40,6 +42,20 @@
       </table>
 
     </div>
+
+    {% else %}
+
+    <div class="alert alert-danger" role="alert">
+
+       <strong>Sorry!</strong> No results found.
+
+    </div>
+
+
+    {% endif %}
+
+
+
 
 
 
