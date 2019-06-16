@@ -33,9 +33,10 @@
                 Browsable APIs
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{% url 'all-cars' %}">All Cars API</a>
+                <a class="dropdown-item" href="{% url 'all-cars-api-view' %}">All Cars API</a>
                 <a class="dropdown-item" href="{% url 'car-detail-api-view' pk=1 %}">Single Car API</a>
                 <a class="dropdown-item" href="{% url 'create-cars-api-view' %}">Add Car API</a>
+                <a class="dropdown-item" href="{% url 'car-search-api-view' search='all' %}">Car Search API</a>
               </div>
             </li>
 
