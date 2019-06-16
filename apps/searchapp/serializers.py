@@ -1,4 +1,4 @@
-from searchapp.models import CarModel
+from apps.searchapp.models import CarModel
 from rest_framework import serializers
 
 

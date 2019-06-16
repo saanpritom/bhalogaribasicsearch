@@ -1,6 +1,6 @@
 from faker import Faker
 from faker.providers import automotive, barcode, company, currency, lorem
-from searchapp.serializers import CarSerializer
+from apps.searchapp.serializers import CarSerializer
 
 
 class FakerCarData:
