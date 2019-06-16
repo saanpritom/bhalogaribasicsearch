@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, Http404
 from django.views.generic import View
 from django.views.generic.base import TemplateView
 from rest_framework import generics, status
@@ -17,6 +17,22 @@ class AllCarsAPIView(generics.ListAPIView):
 
 class CreateCarAPIView(generics.CreateAPIView):
     serializer_class = CarSerializer
+
+
+class CarDetailAPIView(generics.RetrieveAPIView):
+    serializer_class = CarSerializer
+    model = CarModel
+
+    def get_object(self, pk):
+        try:
+            return self.model.objects.get(pk=pk)
+        except self.model.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        car = self.get_object(pk)
+        serializer = self.serializer_class(car)
+        return Response(serializer.data)
 
 
 class CreateFakeCarData(View):
