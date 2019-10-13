@@ -1,2 +1,2 @@
 hello = 'hello.txt'
-env = 'local'
+env = 'production'
